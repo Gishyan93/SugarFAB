@@ -51,6 +51,7 @@ class FloatingPrimaryButton: UIControl {
         
         addTarget(self, action: #selector(touchupInsideAction), for: .touchUpInside)
         addTarget(self, action: #selector(touchdownAction), for: .touchDown)
+        self.data = data
     }
     
     @objc

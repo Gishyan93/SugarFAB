@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "sugarfab",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Gishyan93/SugarFAB",
+      "state" : {
+        "branch" : "main",
+        "revision" : "e5ba1408d73c9fd697dcc6def537f34b9914a971"
+      }
+    }
+  ],
+  "version" : 2
+}

@@ -1,29 +1,42 @@
-SugarFAB
-=============
+//
+//  ViewController.swift
+//  SampleApp
+//
+//  Created by Tigran Gishyan on 24.04.23.
+//
+//  MIT License
+//
+//  Copyright (c) 2022 Tigran Gishyan
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
 
-SugarFAB is a Swift library that creates Floating Action Buttons. It is highly customizable, lightweight, and easy to use.
-SugarToast is available through [Swift Package Manager](https://www.swift.org/package-manager/)
+import UIKit
+import SugarFAB
 
-Screenshots
----------
+class ViewController: UIViewController {
 
-Features
----------
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        createFAB()
+    }
 
-**Core features:**
- - Creating main Floating Action Button with optional callback listener
- - Creating secondary buttons with optional callback listeners and optional tooltip
-
-**Availability:**
- - Swift 5.4 (main branch)
- - iOS >= 13.0
-
-## Usage
-
-In order to correctly compile:
-
-### Initializing somewhere in your ViewController
-```swift
     func createFAB() {
         // Creating Floating View
         let fabView = FloatingView()
@@ -69,14 +82,11 @@ In order to correctly compile:
                 secondaryButtons: [secondaryButton]
             )
         )
+        
+        // Pulse animation for main button
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+            fabView.startPulsingAnimation()
+        }
     }
-```
-### Starting pulse animation for main button
-```swift
-    DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-        fabView.startPulsingAnimation()
-    }
-```
+}
 
-# License
-SugarToast is available under the MIT license. See the LICENSE file for more information.

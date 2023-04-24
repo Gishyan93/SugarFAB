@@ -40,6 +40,7 @@ public struct FloatingSecondaryData {
 class FloatingSecondaryButton: UIView {
     var stackView: UIStackView!
     var button: UIControl!
+    var labelView: UIView!
     var labelWrapperView: UIView!
     private(set) var data: FloatingSecondaryData?
     
@@ -61,10 +62,15 @@ class FloatingSecondaryButton: UIView {
         if let tooltip = data.tooltip {
             // Creating Label's wrapper view
             labelWrapperView = UIView()
-            labelWrapperView.layer.cornerRadius = 12
-            labelWrapperView.backgroundColor = tooltip.backgroundColor
+            labelWrapperView.backgroundColor = .clear
             labelWrapperView.translatesAutoresizingMaskIntoConstraints = false
             labelWrapperView.isHidden = true
+            
+            // Creating Label's view
+            labelView = UIView()
+            labelView.layer.cornerRadius = 12
+            labelView.backgroundColor = tooltip.backgroundColor
+            labelView.translatesAutoresizingMaskIntoConstraints = false
             
             // Creating Label
             let label = UILabel()
@@ -73,14 +79,20 @@ class FloatingSecondaryButton: UIView {
             label.translatesAutoresizingMaskIntoConstraints = false
             
             // Adding to hierarchy
-            labelWrapperView.addSubview(label)
+            labelWrapperView.addSubview(labelView)
+            labelView.addSubview(label)
             
             // Activating constraints
             NSLayoutConstraint.activate([
-                label.topAnchor.constraint(equalTo: labelWrapperView.topAnchor),
-                label.leadingAnchor.constraint(equalTo: labelWrapperView.leadingAnchor, constant: 16),
-                label.bottomAnchor.constraint(equalTo: labelWrapperView.bottomAnchor),
-                label.trailingAnchor.constraint(equalTo: labelWrapperView.trailingAnchor, constant: -16),
+                labelView.topAnchor.constraint(equalTo: labelWrapperView.topAnchor, constant: 5),
+                labelView.bottomAnchor.constraint(equalTo: labelWrapperView.bottomAnchor, constant: -5),
+                labelView.leadingAnchor.constraint(equalTo: labelWrapperView.leadingAnchor),
+                labelView.trailingAnchor.constraint(equalTo: labelWrapperView.trailingAnchor),
+                
+                label.topAnchor.constraint(equalTo: labelView.topAnchor),
+                label.leadingAnchor.constraint(equalTo: labelView.leadingAnchor, constant: 16),
+                label.bottomAnchor.constraint(equalTo: labelView.bottomAnchor),
+                label.trailingAnchor.constraint(equalTo: labelView.trailingAnchor, constant: -16)
             ])
         }
         
@@ -104,10 +116,8 @@ class FloatingSecondaryButton: UIView {
             button.heightAnchor.constraint(equalToConstant: 50),
             button.widthAnchor.constraint(equalToConstant: 50),
             
-            imageView.topAnchor.constraint(equalTo: button.topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: button.bottomAnchor),
-            imageView.leadingAnchor.constraint(equalTo: button.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: button.trailingAnchor)
+            imageView.centerXAnchor.constraint(equalTo: button.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: button.centerYAnchor)
         ])
         
         button.addTarget(self, action: #selector(touchUpinsideAction), for: .touchUpInside)

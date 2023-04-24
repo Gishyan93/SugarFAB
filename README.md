@@ -7,6 +7,8 @@ SugarToast is available through [Swift Package Manager](https://www.swift.org/pa
 Screenshots
 ---------
 
+![alt tag](https://github.com/Gishyan93/SugarFAB/blob/main/Assets/screen.gif)
+
 Features
 ---------
 
@@ -79,4 +81,4 @@ In order to correctly compile:
 ```
 
 # License
-SugarToast is available under the MIT license. See the LICENSE file for more information.
+SugarFAB is available under the MIT license. See the LICENSE file for more information.

@@ -66,6 +66,7 @@ class ViewController: UIViewController {
         let secondaryButton = FloatingSecondaryData(
             image: UIImage(systemName: "minus")!
                 .withTintColor(.white, renderingMode: .alwaysOriginal),
+            backgroundColor: .systemBlue,
             tooltip: FloatingSecondaryData.Tooltip(
                 text: "Cart",
                 textColor: .black,
@@ -85,7 +86,7 @@ class ViewController: UIViewController {
         
         // Pulse animation for main button
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-            fabView.startPulsingAnimation()
+//            fabView.startPulsingAnimation()
         }
     }
 }

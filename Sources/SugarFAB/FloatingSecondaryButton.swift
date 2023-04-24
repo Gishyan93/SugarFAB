@@ -115,7 +115,7 @@ class FloatingSecondaryButton: UIView {
 
         let tapGesture = UILongPressGestureRecognizer(target: self, action: #selector(longTapped))
         button.addGestureRecognizer(tapGesture)
-        
+        self.data = data
     }
     
     @objc

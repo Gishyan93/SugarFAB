@@ -99,18 +99,6 @@ public class FloatingView: UIView {
         animation.repeatCount = Float.infinity
     }
     
-    private func primaryButtonScaleDownAnimation() {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.floatingPrimaryButton.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
-        })
-    }
-    
-    private func primaryButtonScaleUpAnimation() {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.floatingPrimaryButton.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 1.0)
-        })
-    }
-    
     private func primaryButtonRotationAnimation() {
         isExpanded.toggle()
         if isExpanded {
@@ -180,7 +168,6 @@ public class FloatingView: UIView {
         } else {
             return false
         }
-//        return mainStackView.frame.contains(point) || overlayView.frame.contains(point)
     }
 }
 
@@ -194,12 +181,7 @@ extension FloatingView: UIGestureRecognizerDelegate, FloatingPrimaryButtonDelega
         return false
     }
     
-    func touchDownAction() {
-        primaryButtonScaleDownAnimation()
-    }
-    
     func touchUpInsideAction() {
-        primaryButtonScaleUpAnimation()
         primaryButtonRotationAnimation()
     }
     

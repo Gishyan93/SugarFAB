@@ -24,13 +24,51 @@ In order to correctly compile:
 
 ### Initializing somewhere in your ViewController
 ```swift
-    func createSimpleToast() {
-        let data = ToastViewData(image: UIImage(named: "info")!,
-                                 title: "Sugar Title",
-                                 subtitle: "Sugar Subtitle")
-                    
-        let presenter = ToastView.presenter(forAlertWithData: data)
-        present(presenter, animated: true)
+    func createFAB() {
+        // Creating Floating View
+        let fabView = FloatingView()
+        fabView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Adding to subview of current view
+        view.addSubview(fabView)
+        
+        // Creating constraints
+        NSLayoutConstraint.activate([
+            fabView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            fabView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            fabView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            fabView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+        
+        // Adding primary button
+        let primaryButton = FloatingPrimaryButtonData(
+            color: .systemRed,
+            image: UIImage(systemName: "plus")!
+                .withTintColor(.white, renderingMode: .alwaysOriginal)
+        ) { [weak self] in
+            print("Primary action pressed")
+        }
+        
+        // Adding secondary buttons
+        let secondaryButton = FloatingSecondaryData(
+            image: UIImage(systemName: "minus")!
+                .withTintColor(.white, renderingMode: .alwaysOriginal),
+            tooltip: FloatingSecondaryData.Tooltip(
+                text: "Cart",
+                textColor: .black,
+                backgroundColor: .systemBlue,
+                font: .systemFont(ofSize: 16)
+            )
+        ) { [weak self] in
+            print("Secondary action pressed")
+        }
+        
+        fabView.set(
+            data: FloatingViewData(
+                primaryButton: primaryButton,
+                secondaryButtons: [secondaryButton]
+            )
+        )
     }
 ```
 

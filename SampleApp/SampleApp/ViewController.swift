@@ -86,7 +86,7 @@ class ViewController: UIViewController {
         
         // Pulse animation for main button
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-//            fabView.startPulsingAnimation()
+            fabView.startPulsingAnimation()
         }
     }
 }

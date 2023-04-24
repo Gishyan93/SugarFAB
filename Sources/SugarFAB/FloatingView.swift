@@ -72,7 +72,8 @@ public class FloatingView: UIView {
         addGestureRecognizer(tap)
     }
     
-    @objc private func handleTapRecognizer() {
+    @objc
+    private func handleTapRecognizer() {
         primaryButtonRotationAnimation()
     }
     
@@ -139,7 +140,7 @@ public class FloatingView: UIView {
         
         UIView.animate(withDuration: 0.2, animations: {
             view.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 1.0)
-        }) { finished in
+        }) { _ in
             self.showSecondaryButtons()
         }
     }
@@ -154,7 +155,7 @@ public class FloatingView: UIView {
         
         UIView.animate(withDuration: 0.075, animations: {
             view.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
-        }) { finished in
+        }) { _ in
             view.isHidden = true
             self.dismissSecondaryButtons()
         }
@@ -201,15 +202,19 @@ extension FloatingView: UIGestureRecognizerDelegate, FloatingPrimaryButtonDelega
         
         layer.insertSublayer(pulsatingLayer, at: 1)
         
-        let buttonHeight = mainStackView.arrangedSubviews.first!.frame.height
-        let secondaryButtonsCount = CGFloat(mainStackView.arrangedSubviews.count - 1)
-        
-        let allHeigh = CGFloat((secondaryButtonsCount * buttonHeight) + (secondaryButtonsCount * 10.0))
-        
-        let xPoint = mainStackView.frame.origin.x + buttonHeight/2
-        let yPoint = mainStackView.frame.origin.y + allHeigh + buttonHeight/2
-        let position = CGPoint(x: xPoint, y: yPoint)
-        pulsatingLayer.position = position
+        if secondaryToHideViews.isEmpty {
+            pulsatingLayer.position = mainStackView.center
+        } else {
+            let buttonHeight = mainStackView.arrangedSubviews.first!.frame.height
+            let secondaryButtonsCount = CGFloat(mainStackView.arrangedSubviews.count - 1)
+            
+            let allHeigh = CGFloat((secondaryButtonsCount * buttonHeight) + (secondaryButtonsCount * 10.0))
+            
+            let xPoint = mainStackView.frame.origin.x + buttonHeight/2
+            let yPoint = mainStackView.frame.origin.y + allHeigh + buttonHeight/2
+            let position = CGPoint(x: xPoint, y: yPoint)
+            pulsatingLayer.position = position
+        }
     }
     
     func addOverlay() {
@@ -272,7 +277,7 @@ private extension FloatingView {
             mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 
             floatingPrimaryButton.heightAnchor.constraint(equalToConstant: 50),
-            floatingPrimaryButton.widthAnchor.constraint(equalToConstant: 50),
+            floatingPrimaryButton.widthAnchor.constraint(equalToConstant: 50)
         ])
         
         layoutIfNeeded()

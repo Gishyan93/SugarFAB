@@ -107,7 +107,7 @@ class FloatingSecondaryButton: UIView {
             imageView.topAnchor.constraint(equalTo: button.topAnchor),
             imageView.bottomAnchor.constraint(equalTo: button.bottomAnchor),
             imageView.leadingAnchor.constraint(equalTo: button.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: button.leadingAnchor)
+            imageView.trailingAnchor.constraint(equalTo: button.trailingAnchor)
         ])
         
         button.addTarget(self, action: #selector(touchUpinsideAction), for: .touchUpInside)

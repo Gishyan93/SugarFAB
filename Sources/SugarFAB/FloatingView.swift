@@ -55,16 +55,16 @@ public class FloatingView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        commonInit()
         addTapGesture()
+        commonInit()
         conformToDelegates()
         createPulseAnimation()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        commonInit()
         addTapGesture()
+        commonInit()
         conformToDelegates()
         createPulseAnimation()
     }
@@ -72,6 +72,17 @@ public class FloatingView: UIView {
     public func set(data: FloatingViewData) {
         floatingPrimaryButton.set(data: data.primaryButton)
         set(buttons: data.secondaryButtons)
+    }
+    
+    private func addTapGesture() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapRecognizer))
+        tap.delegate = self
+        addGestureRecognizer(tap)
+    }
+    
+    @objc
+    private func handleTapRecognizer() {
+        primaryButtonRotationAnimation()
     }
     
     public func startPulsingAnimation() {
@@ -85,17 +96,6 @@ public class FloatingView: UIView {
         guard pulsatingLayer != nil else { return }
         pulsatingLayer.removeAllAnimations()
         pulsatingLayer.removeFromSuperlayer()
-    }
-    
-    private func addTapGesture() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapRecognizer))
-        tap.delegate = self
-        addGestureRecognizer(tap)
-    }
-    
-    @objc
-    private func handleTapRecognizer() {
-        primaryButtonRotationAnimation()
     }
     
     private func conformToDelegates() {
@@ -124,9 +124,6 @@ public class FloatingView: UIView {
     private func primaryButtonRotationAnimation() {
         isExpanded.toggle()
         if isExpanded {
-            UIView.performWithoutAnimation {
-                addOverlay()
-            }
             UIView.animate(withDuration: 0.2) {
                 self.overlayView.alpha = 1
                 self.floatingPrimaryButton.imageView.transform = CGAffineTransform(rotationAngle: .pi/4)
@@ -140,7 +137,6 @@ public class FloatingView: UIView {
                 self.overlayView.alpha = 0
                 self.floatingPrimaryButton.imageView.transform = CGAffineTransform(rotationAngle: 0)
             } completion: { _ in
-                self.overlayView.removeFromSuperview()
                 self.dismissSecondaryButtons()
             }
         }
@@ -185,7 +181,7 @@ public class FloatingView: UIView {
     public override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         if mainStackView.frame.contains(point) {
             return true
-        } else if overlayView.isDescendant(of: self) {
+        } else if overlayView.alpha > 0 {
             return true
         } else {
             return false
@@ -237,17 +233,6 @@ extension FloatingView: UIGestureRecognizerDelegate, FloatingPrimaryButtonDelega
             pulsatingLayer.position = position
         }
     }
-    
-    func addOverlay() {
-        insertSubview(overlayView, at: 0)
-
-        NSLayoutConstraint.activate([
-            overlayView.topAnchor.constraint(equalTo: topAnchor),
-            overlayView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            overlayView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            overlayView.trailingAnchor.constraint(equalTo: trailingAnchor)
-        ])
-    }
 }
 
 // MARK: - Layout
@@ -293,6 +278,10 @@ private extension FloatingView {
     
     func activateConstraints() {
         NSLayoutConstraint.activate([
+            overlayView.topAnchor.constraint(equalTo: topAnchor),
+            overlayView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            overlayView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            overlayView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
             mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
             mainStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
